@@ -1,22 +1,34 @@
-/* eslint-disable import/extensions */
 /* eslint-disable no-undef */
-import { deepEqual } from 'assert';
-import { assert } from 'console';
-import dataBase from '../database/index.js';
+import { deepStrictEqual } from 'assert'
+import dataBase from '../database/index.js'
 
 const DEFAULT_ITEM = {
   name: 'Flash',
   power: 'Speed',
-  id: 10,
-};
+  id: 2,
+}
 
 describe('Registration manipulation suite', () => {
+  before(async () => {
+    await dataBase.register(DEFAULT_ITEM)
+  })
+
   it('Must list heroes by id correctly', async () => {
-    const expected = DEFAULT_ITEM;
+    const expected = DEFAULT_ITEM
 
     // Process of Listing
-    const [result] = await dataBase.list(expected.id);
+    const [result] = await dataBase.list(expected.id)
 
-    deepEqual(result, expected);
-  });
-});
+    deepStrictEqual(result, expected)
+  })
+
+  it('Must register a hero using files', async () => {
+    const expected = DEFAULT_ITEM
+
+    await dataBase.register(DEFAULT_ITEM)
+
+    const [actual] = await dataBase.list(DEFAULT_ITEM.id)
+
+    deepStrictEqual(actual, expected)
+  })
+})
