@@ -42,8 +42,49 @@ class Database {
 
   async list(id) {
     const data = await this.getDatasFiles()
+
     const dataFilter = data.filter((item) => (id ? item.id === id : true))
+
     return dataFilter
+  }
+
+  async update(id, data) {
+    const datas = await this.getDatasFiles()
+
+    const index = datas.findIndex((item) => item.id === parseInt(id, 10))
+
+    if (index === -1) {
+      throw Error('Herói não encontrado!')
+    }
+
+    const actual = datas[index]
+
+    const objectUpdate = {
+      ...actual,
+      ...data,
+    }
+
+    datas.splice(index, 1, objectUpdate)
+
+    return await this.writeFiles(datas)
+  }
+
+  async remove(id) {
+    if (!id) {
+      return await this.writeFiles([])
+    }
+
+    const data = await this.getDatasFiles()
+
+    const index = data.findIndex((item) => item.id === parseInt(id, 10))
+
+    if (index === -1) {
+      throw Error('Herói não encontrado!')
+    }
+
+    data.splice(index, 1)
+
+    return await this.writeFiles(data)
   }
 }
 
