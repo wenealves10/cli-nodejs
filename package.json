@@ -6,6 +6,7 @@
   "author": "Wene Alves de Oliveira <weneplay5@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node src/",
     "dev": "nodemon src/index.js",
     "test": "mocha ./test"
   },
@@ -19,5 +20,8 @@
     "mocha": "^8.3.0",
     "nodemon": "^2.0.7",
     "prettier": "^2.2.1"
+  },
+  "dependencies": {
+    "commander": "^7.1.0"
   }
 }
